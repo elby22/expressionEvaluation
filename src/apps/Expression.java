@@ -134,13 +134,44 @@ public class Expression {
 
     /**
      * Populates the scalars and arrays lists with symbols for scalar and array
-     * variables in the expression. For every variable, a SINGLE symbol is created and stored,
+     * variables in the expression. For every varciable, a SINGLE symbol is created and stored,
      * even if it appears more than once in the expression.
      * At this time, values for all variables are set to
      * zero - they will be loaded from a file in the loadSymbolValues method.
      */
     public void buildSymbols() {
-    	// COMPLETE THIS METHOD
+    	scalars = new ArrayList<ScalarSymbol>();
+    	arrays = new ArrayList<ArraySymbol>();
+    	ArrayList<String> tokenList = new ArrayList<String>();
+    	StringTokenizer st = new StringTokenizer(expr, delims);
+    	while(st.hasMoreTokens()){
+    		tokenList.add(st.nextToken());
+    	}
+    	
+    	for (int i = 0; i < tokenList.size() - 1; i++){
+    		int index = expr.indexOf(tokenList.get(i));
+    		System.out.println(tokenList.get(i));
+    		if(expr.charAt(index + tokenList.get(i).length()) == '['){
+    			ArraySymbol a = new ArraySymbol(tokenList.get(i));
+    			if(!arrays.contains(a)) arrays.add(a);
+    		}
+    	}
+    	
+    	st = new StringTokenizer(expr, delims);
+    	
+    	while(st.hasMoreTokens()){
+    		String s = st.nextToken();
+    		System.out.println(s);
+    		if(!arrays.contains(s)){
+    			ScalarSymbol a = new ScalarSymbol(s);
+    			scalars.add(a);
+    		}
+    	}
+    	System.out.println(arrays.toString());
+    	System.out.println(scalars.toString());
+    	
+    	//Test with a-(b+Abrray[B[2]])*d+3
+
     }
     
     /**
