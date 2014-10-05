@@ -26,15 +26,15 @@ public class Evaluator {
 			
 			expr.buildSymbols();
 
-//			System.out.print("Enter symbol values file name, or hit return if no symbols => ");
-//			line = scstdin.nextLine();
-//			if (line.length() != 0) {
-//				Scanner scfile = new Scanner(new File(line));
-//				expr.loadSymbolValues(scfile);
-//				//expr.printScalars();
-//				//expr.printArrays();
-//			}
-//			System.out.println("Value of expression = " + expr.evaluate());
+			System.out.print("Enter symbol values file name, or hit return if no symbols => ");
+			line = scstdin.nextLine();
+			if (line.length() != 0) {
+				Scanner scfile = new Scanner(new File(line));
+				expr.loadSymbolValues(scfile);
+				//expr.printScalars();
+				//expr.printArrays();
+			}
+			System.out.println("Value of expression = " + expr.evaluate());
 		}
 
 	}

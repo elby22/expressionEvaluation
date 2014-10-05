@@ -167,10 +167,8 @@ public class Expression {
     	}
     	
     	st = new StringTokenizer(expr, delims);
-    	System.out.println(tokenList);
     	while(st.hasMoreTokens()){
     		String s = st.nextToken();
-    		System.out.println(s);
     		boolean taken = false;
     		for(int i = 0; i < scalars.size(); i++){
     			if(scalars.get(i).name.equals(s)) taken = true;
@@ -229,7 +227,31 @@ public class Expression {
      * @return Result of evaluation
      */
     public float evaluate() {
-    	// COMPLETE THIS METHOD
+    	System.out.println(arrays);
+    	System.out.println(scalars);
+    	Stack<String> operands = new Stack<String>();
+    	Stack<String> operators = new Stack<String>();
+    	StringTokenizer st = new StringTokenizer(expr, delims);
+    	
+    	while(st.hasMoreTokens()){
+    		operands.push(st.nextToken());
+    	}
+    	
+    	for(int i = 0; i < expr.length(); i++){
+    		char c = expr.charAt(i);
+    		if(c == '+' || c == '-' || c == '*' || c == '/'
+    				|| c == '[' || c == ']' || c == '(' || c == ')'){
+    			operators.push(Character.toString(c));
+    		}
+    	}
+    	
+    	while(operands.size() > 0){
+    		System.out.print(operands.pop());
+    	}
+    	System.out.println();
+    	while(operators.size() > 0){
+    		System.out.print(operators.pop());
+    	}
     	
         // FOLLOWING LINE ADDED TO MAKE COMPILER HAPPY
     	return 0;
