@@ -148,30 +148,41 @@ public class Expression {
     		tokenList.add(st.nextToken());
     	}
     	
+//    	Test with:
+//    	a-(b+A[B[2]])*d+3
+//    	A[2*(a+b)]
+//   	(varx + vary*varz[(vara+varb[(a+b)*33])])/55
+
     	for (int i = 0; i < tokenList.size() - 1; i++){
     		int index = expr.indexOf(tokenList.get(i));
-    		System.out.println(tokenList.get(i));
+    		//Check for proper index of for token and expr
+    		if(i > 0){
+    			char c = expr.charAt(index - 1);
+    			if(Character.isLetter(c)) continue;	
+    		}
     		if(expr.charAt(index + tokenList.get(i).length()) == '['){
     			ArraySymbol a = new ArraySymbol(tokenList.get(i));
-    			if(!arrays.contains(a)) arrays.add(a);
+    			if(!(arrays.contains(a) || a.name.matches("[-+]?\\d*\\.?\\d+"))) arrays.add(a);
     		}
     	}
     	
     	st = new StringTokenizer(expr, delims);
-    	
+    	System.out.println(tokenList);
     	while(st.hasMoreTokens()){
     		String s = st.nextToken();
     		System.out.println(s);
-    		if(!arrays.contains(s)){
+    		boolean taken = false;
+    		for(int i = 0; i < scalars.size(); i++){
+    			if(scalars.get(i).name.equals(s)) taken = true;
+    		}
+    		for(int i = 0; i < arrays.size(); i++){
+    			if(arrays.get(i).name.equals(s)) taken = true;
+    		}
+    		if(!(taken || s.matches("[-+]?\\d*\\.?\\d+"))){
     			ScalarSymbol a = new ScalarSymbol(s);
     			scalars.add(a);
     		}
     	}
-    	System.out.println(arrays.toString());
-    	System.out.println(scalars.toString());
-    	
-    	//Test with a-(b+Abrray[B[2]])*d+3
-
     }
     
     /**
