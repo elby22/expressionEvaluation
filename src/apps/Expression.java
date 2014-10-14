@@ -148,11 +148,6 @@ public class Expression {
     		tokenList.add(st.nextToken());
     	}
     	
-//    	Test with:
-//    	a-(b+A[B[2]])*d+3
-//    	A[2*(a+b)]
-//   	(varx + vary*varz[(vara+varb[(a+b)*33])])/55
-
     	for (int i = 0; i < tokenList.size() - 1; i++){
     		int index = expr.indexOf(tokenList.get(i));
     		//Check for proper index of for token and expr
@@ -226,6 +221,10 @@ public class Expression {
      * 
      * @return Result of evaluation
      */
+//	Test with:
+//	a-(b+A[B[2]])*d+3
+//	A[2*(a+b)]
+//	(varx + vary*varz[(vara+varb[(a+b)*33])])/55
     public float evaluate() {
     	System.out.println(arrays);
     	System.out.println(scalars);
@@ -233,8 +232,17 @@ public class Expression {
     	Stack<String> operators = new Stack<String>();
     	StringTokenizer st = new StringTokenizer(expr, delims);
     	
-    	while(st.hasMoreTokens()){
-    		operands.push(st.nextToken());
+    	System.out.println("\n" + openingBracketIndex);
+    	System.out.println(closingBracketIndex);
+	    	
+    	for(int i = 0; i < expr.length(); i++){
+    		if(expr.charAt(i) == '(' || expr.charAt(i) == '['){
+    			int openIndex = openingBracketIndex.indexOf(i);
+    			int closeIndex = closingBracketIndex.get(openIndex);
+    			String werwer = expr.substring(i + 1, closeIndex);
+    			System.out.println(werwer);
+//    			evaluateClosure(expr.substring(i, closeIndex));
+    		}
     	}
     	
     	for(int i = 0; i < expr.length(); i++){
@@ -245,14 +253,26 @@ public class Expression {
     		}
     	}
     	
-    	while(operands.size() > 0){
-    		System.out.print(operands.pop());
-    	}
-    	System.out.println();
-    	while(operators.size() > 0){
-    		System.out.print(operators.pop());
-    	}
+//    	while(operands.size() > 0){
+//    		System.out.print(operands.pop());
+//    	}
+//    	System.out.println();
+//    	while(operators.size() > 0){
+//    		System.out.print(operators.pop());
+//    	}
     	
+    	
+//    	while(!operands.isEmpty() && !operators.isEmpty()){
+//    		System.out.print(operands.pop());
+//    		System.out.print(operators.pop());
+//    		boolean close = false;
+//    		while(operators.peek() == "[" || operators.peek() == "]" || operators.peek() == "(" || operators.peek() == ")"){
+//    			if(operators.peek() == "]" ||operators.peek() == ")") close = true;
+//    			System.out.print(operators.pop());
+//    		}
+//    		if(close) System.out.print(operators.pop());
+//    	}
+//    	
         // FOLLOWING LINE ADDED TO MAKE COMPILER HAPPY
     	return 0;
     }
@@ -274,5 +294,11 @@ public class Expression {
     		System.out.println(as);
     	}
     }
-
+    
+    /**
+     * Recursive method that evaluates parens and returns value inside that bitch
+     */
+    private float evaluateClosure(String e){
+    	return 0;
+    }
 }
